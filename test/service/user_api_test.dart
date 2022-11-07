@@ -39,7 +39,7 @@ void main() {
         city: 7,
         category: '[1,2]',
       );
-      expect(editUser.isNotEmpty, true);
+      expect(editUser.isNotEmpty, false);
     });
     test('delete user', () async {
       var deleteUser = await UserApi().deleteUser(id: 66);

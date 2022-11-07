@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  const SearchScreen({super.key,});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -32,8 +32,56 @@ class _SearchScreenState extends State<SearchScreen> {
       listen: false,
     );
 
+    bottomSheetUser(user) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(10),
+          ),
+        ),
+        builder: (context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.account_circle, size: kToolbarHeight),
+                title: Text(user.fullname),
+                subtitle: Text(user.email),
+              ),
+              SizedBox(
+                height: kToolbarHeight,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: user.category.length,
+                  itemBuilder: (context, index) {
+                    final category = user.category[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Chip(label: Text(category)),
+                    );
+                  },
+                ),
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(AllColor.green),
+                ),
+                onPressed: () {
+                  userViewModel.openWhatsapp(phone: user.phone);
+                },
+                child: Text('Whatsapp'),
+              ),
+              SizedBox(height: 120),
+            ],
+          );
+        },
+      );
+    }
+
     Widget dataList() {
-      // print('${userViewModel.filterUsers(null)}');
       return userViewModel.selectedItem == null
           ? SizedBox()
           : ListView.builder(
@@ -54,72 +102,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         const Icon(Icons.account_circle, size: kToolbarHeight),
                     title: Text(user.fullname),
                     subtitle: Text(user.city),
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(10),
-                          ),
-                        ),
-                        builder: (context) {
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ListTile(
-                                leading: const Icon(Icons.account_circle,
-                                    size: kToolbarHeight),
-                                title: Text(user.fullname),
-                                subtitle: Text(user.email),
-                              ),
-                              // userViewModel.getChipCategories(index),
-                              SizedBox(
-                                height: kToolbarHeight,
-                                child: ListView.builder(
-                                  // clipBehavior: Clip.antiAlias,
-                                  // padding: EdgeInsets.zero,
-                                  scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  itemCount: user.category.length,
-                                  itemBuilder: (context, index) {
-                                    final category = user.category[index];
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Chip(
-                                        label: Text(category)
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(AllColor.Green),
-                                ),
-                                onPressed: () {
-                                  userViewModel.openWhatsapp(
-                                    phone: user.phone,
-                                    context: context,
-                                  );
-                                  // launchUrl(
-                                  //   Uri.parse(
-                                  //       'https://api.whatsapp.com/send?phone=6287788900084'),
-                                  // );
-                                },
-                                child: Text('Whatsapp'),
-                              ),
-                              // for (var i = 0;
-                              //     i < user.category.length;
-                              //     i++) ...[
-                              //   Chip(label: Text(user.category[i])),
-                              // ],
-                              SizedBox(height: 120),
-                            ],
-                          );
-                        },
-                      );
-                    },
+                    onTap: () => bottomSheetUser(user),
                   ),
                 );
               },
@@ -159,14 +142,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ),
                 ),
-
-                // Expanded(
-                //   child: Card(
-                //     child: ExpansionTile(
-                //       title: Text(AllText.city),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ],

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cakang/service/user_api.dart';
 import 'package:cakang/view/menu/main_screen.dart';
 import 'package:cakang/view/menu/profile/login/profile_screen.dart';
@@ -13,42 +15,36 @@ class UserViewModel extends ChangeNotifier {
   Map userLogin = {};
   String? selectedItem;
 
-  late int id;
-  String fullname = '';
-  String username = '';
-  String email = '';
-  String password = '';
-  String phone = '';
-  String city = '';
-  List category = [];
+  // late int id;
+  // String fullname = '';
+  // String username = '';
+  // String email = '';
+  // String password = '';
+  // String phone = '';
+  // String city = '';
+  // List category = [];
   // List get users => _users;
 
-  openWhatsapp({required phone, required context}) async {
+  openWhatsapp({required phone}) async {
     final _phone = phone.substring(1);
     final url = Uri.parse('https://api.whatsapp.com/send?phone=62$_phone');
     await launchUrl(url, mode: LaunchMode.externalApplication);
-    //   throw "cannot launch";
-    // }
-    // await canLaunchUrl(url)
-    //     ? await launchUrl(url)
-    //     : ScaffoldMessenger.of(context).showSnackBar(
-    //         SnackBar(content: new Text("whatsapp no installed")),
-    //       );
-  }
-
-  getUsers() async {
-    users = filterUser = await UserApi().getUser();
-    // _users = data;
     notifyListeners();
   }
 
-  // getChipCategories(index)  {
-  //   final List _category = filterUser[index]['category'];
-  //   for (var i = 0; i < _category.length; i++) {
-  //     // return Chip(label: Text('${_category[i]}'));
-  //   }
-  //   notifyListeners();
-  // }
+  getUsers() async {
+    if (selectedItem != null) {
+      selectedItem = null;
+    }
+    users = filterUser = await UserApi().getUser();
+    notifyListeners();
+  }
+
+  getUsersById(id) async {
+    // userLogin.clear();
+    userLogin = await UserApi().getUserById(id: id);
+    notifyListeners();
+  }
 
   regisUsers({
     required fullname,
@@ -87,8 +83,6 @@ class UserViewModel extends ChangeNotifier {
       MaterialPageRoute(builder: ((context) => const ProfileScreen())),
       (route) => false,
     );
-    // users = await UserApi().getUser();
-    // _users = data;
     notifyListeners();
   }
 
@@ -102,7 +96,8 @@ class UserViewModel extends ChangeNotifier {
     required city,
     required category,
   }) async {
-    await UserApi().putUser(
+    // userLogin.clear();
+    userLogin = await UserApi().putUser(
       id: id,
       fullname: fullname,
       username: username,
@@ -112,21 +107,35 @@ class UserViewModel extends ChangeNotifier {
       city: city,
       category: category,
     );
-    // users = await UserApi().getUser();
-    // _users = data;
     notifyListeners();
   }
 
-  deleteUsers({required id}) async {
+  deleteUsers({required id, required context}) async {
     await UserApi().deleteUser(id: id);
-    // users = await UserApi().getUser();
-    // _users = data;
+    userLogin.clear();
+    loginData.setBool('isLogin', false);
+    loginData.remove('id');
+    loginData.remove('fullname');
+    loginData.remove('username');
+    loginData.remove('email');
+    loginData.remove('password');
+    loginData.remove('phone');
+    loginData.remove('city');
+    loginData.remove('category');
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: ((context) => const MainScreen()),
+      ),
+      (route) => false,
+    );
     notifyListeners();
   }
 
   filterUsers(value) {
     filterUser = users.where((element) => element.city == value).toList();
     selectedItem = value;
+    // print(value);
     notifyListeners();
   }
 
@@ -152,8 +161,7 @@ class UserViewModel extends ChangeNotifier {
       loginData.setString('password', userLogin['password']);
       loginData.setString('phone', userLogin['phone']);
       loginData.setString('city', userLogin['city']);
-      loginData.setStringList(
-          'category', List<String>.from(userLogin['category']));
+      loginData.setString('category', userLogin['category'].toString());
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: ((context) => const ProfileScreen())),
@@ -187,24 +195,26 @@ class UserViewModel extends ChangeNotifier {
   fetchUsers() async {
     loginData = await SharedPreferences.getInstance();
     // final fullname = {'fullname': loginData.getStringl('fullname')};
-    // Map<String,dynamic> fetch = {
-    //   'fullname': loginData.getString('fullname').toString(),
-    //   'username': loginData.getString('username').toString(),
-    //   'email': loginData.getString('email').toString(),
-    //   'password': loginData.getString('password').toString(),
-    //   'phone': loginData.getString('phone').toString(),
-    //   'city': loginData.getString('city').toString(),
-    //   'categroy': loginData.getStringList('categroy')!.toList(),
-    // };
-    // userLogin.addAll(fetch);
-    id = loginData.getInt('id')!;
-    fullname = loginData.getString('fullname').toString();
-    username = loginData.getString('username').toString();
-    email = loginData.getString('email').toString();
-    password = loginData.getString('password').toString();
-    phone = loginData.getString('phone').toString();
-    city = loginData.getString('city').toString();
-    category = loginData.getStringList('category')!.toList();
+    final _category = jsonDecode(loginData.getString('category').toString());
+    Map<String, dynamic> fetch = {
+      'id': loginData.getInt('id'),
+      'fullname': loginData.getString('fullname').toString(),
+      'username': loginData.getString('username').toString(),
+      'email': loginData.getString('email').toString(),
+      'password': loginData.getString('password').toString(),
+      'phone': loginData.getString('phone').toString(),
+      'city': loginData.getString('city').toString(),
+      'categroy': _category,
+    };
+    userLogin.addAll(fetch);
+    // id = loginData.getInt('id')!;
+    // fullname = loginData.getString('fullname').toString();
+    // username = loginData.getString('username').toString();
+    // email = loginData.getString('email').toString();
+    // password = loginData.getString('password').toString();
+    // phone = loginData.getString('phone').toString();
+    // city = loginData.getString('city').toString();
+    // category = loginData.getStringList('category')!.toList();
     notifyListeners();
   }
 

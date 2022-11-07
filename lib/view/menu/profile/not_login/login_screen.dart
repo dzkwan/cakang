@@ -1,8 +1,8 @@
 import 'package:cakang/utils/pallete.dart';
 import 'package:cakang/view/menu/profile/not_login/register_screen.dart';
 import 'package:cakang/view/menu/profile/not_login/widget/button_login.dart';
+import 'package:cakang/view/menu/profile/not_login/widget/text_button.dart';
 import 'package:cakang/view_model/user_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    Provider.of<UserViewModel>(context,listen: false).checkLogin(context);
+    Provider.of<UserViewModel>(context, listen: false).checkLogin(context);
     super.initState();
   }
 
@@ -37,14 +37,6 @@ class _LoginScreenState extends State<LoginScreen> {
       context,
       listen: false,
     );
-    // final categoryViewModel = Provider.of<CategoryViewModel>(
-    //   context,
-    //   listen: false,
-    // );
-    // final cityViewModel = Provider.of<CityViewModel>(
-    //   context,
-    //   listen: false,
-    // );
 
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Text(
               AllText.login,
-              // overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
@@ -94,71 +85,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     password: passwordCtrl.text,
                     context: context,
                   );
-                  // ScaffoldMessenger.of(context).showSnackBar();
-                  // Navigator.pushAndRemoveUntil(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => ProfileScreen(),
-                  //   ),
-                  //   (route) => false,
-                  // );
-                  // showDialog(
-                  //   context: context,
-                  //   builder: (context) => AlertDialog(
-                  //     content: Consumer<UserViewModel>(
-                  //       builder: (context, value, child) {
-                  //         return Text('${userViewModel.userLogin}');
-                  //       },
-                  //       // child: Text(
-                  //       //   data.toString(),
-                  //       // ),
-                  //     ),
-                  //   ),
-                  // );
                 }
               }),
             ),
-            // ElevatedButton(
-            //   style: ButtonStyle(
-            //     fixedSize: MaterialStatePropertyAll<Size>(
-            //       Size(
-            //         double.maxFinite,
-            //         40,
-            //       ),
-            //     ),
-            //   ),
-            //   child: Text(AllText.login),
-            //   onPressed: (() {
-            //     if (formKey.currentState!.validate()) {}
-            //   }),
-            // ),
             const SizedBox(height: 30),
-            Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Belum punya akun? ',
-                    style: Theme.of(context).textTheme.overline,
-                  ),
-                  GestureDetector(
-                    onTap: (() {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const RegisterScreen()),
-                        ((route) => false),
-                      );
-                    }),
-                    child: Text(
-                      'Daftar Sekarang',
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                            color: AllColor.buttonColor,
-                          ),
-                    ),
-                  ),
-                ],
-              ),
+            TextBtnAccount(
+              text: 'Belum punya akun? ',
+              textButton: 'Daftar Sekarang',
+              moveScreen: const RegisterScreen(),
             ),
           ],
         ),

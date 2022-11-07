@@ -60,20 +60,15 @@ ThemeData myTheme = ThemeData(
     ),
   ),
   inputDecorationTheme: InputDecorationTheme(
-    // hintText: hintText,
-    // hintStyle: const TextTheme().bodyText1!.copyWith(color: AllColor.gray),
     hintStyle: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.5,
       color: AllColor.darkGrey,
     ),
-    // Theme.of(context).textTheme.headline6!.copyWith(color: MyColor.gray),
     filled: true,
     fillColor: AllColor.border,
     contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-    // labelStyle: TextStyle(color: MyColor.primaryColor),
-    // suffixIcon: suffixIcon,
     border: OutlineInputBorder(
       borderSide: BorderSide(
         color: AllColor.outlineBorder,
@@ -121,7 +116,6 @@ ThemeData myTheme = ThemeData(
   cardTheme: CardTheme(
     elevation: 0,
     clipBehavior: Clip.antiAlias,
-    // margin: EdgeInsets.zero,
     shape: RoundedRectangleBorder(
       side: BorderSide(
         color: AllColor.outlineBorder,
@@ -135,25 +129,10 @@ ThemeData myTheme = ThemeData(
   chipTheme: ChipThemeData(
     backgroundColor: AllColor.border,
   ),
-  // listTileTheme: ListTileThemeData(
-  //   tileColor: AllColor.border,
-  //   contentPadding: const EdgeInsets.symmetric(
-  //     vertical: 5,
-  //     horizontal: 15,
-  //   ),
-  //   shape: RoundedRectangleBorder(
-  //     //<-- SEE HERE
-  //     // side: BorderSide(width: 2),
-  //     borderRadius: BorderRadius.circular(kToolbarHeight),
-  //   ),
-  // ),
   radioTheme: RadioThemeData(
     fillColor: MaterialStatePropertyAll(AllColor.buttonColor),
-    // visualDensity: VisualDensity(horizontal: -4,vertical: -4,),
-    // splashRadius: 0
   ),
   snackBarTheme: SnackBarThemeData(
-    // behavior: SnackBarBehavior.fixed,
     backgroundColor: AllColor.bgErrorColor,
     contentTextStyle: TextStyle(
       color: AllColor.errorColor,

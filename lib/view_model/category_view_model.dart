@@ -5,7 +5,6 @@ class CategoryViewModel extends ChangeNotifier {
   List categories = [];
   List idCategory = [];
   Map allCategory = {};
-  // List get categories => _categories;
 
   choseCategory({required index, required value, required id})  {
     allCategory['value$index'] = value;

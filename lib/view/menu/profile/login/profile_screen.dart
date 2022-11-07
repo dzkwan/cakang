@@ -1,4 +1,6 @@
 import 'package:cakang/utils/pallete.dart';
+import 'package:cakang/view/menu/profile/login/edit_profile_screen.dart';
+import 'package:cakang/view/menu/profile/login/widget/listtile.dart';
 import 'package:cakang/view_model/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,9 +26,95 @@ class _ProfileScreenState extends State<ProfileScreen> {
       listen: false,
     );
 
+    dialogLogout() {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: const Text('Are you sure?'),
+          actions: [
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () => userViewModel.logout(context),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AllText.profile),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: const Text('edit'),
+                onTap: () {
+                  Future.delayed(
+                    const Duration(seconds: 0),
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Consumer<UserViewModel>(
+                          builder: (context, value, _) => EditProfileScreen(
+                            id: userViewModel.userLogin['id'],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              PopupMenuItem(
+                child: const Text('delete'),
+                onTap: () {
+                  Future.delayed(
+                    const Duration(seconds: 0),
+                    () => showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        content: const Text('Are you sure?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('No'),
+                          ),
+                          TextButton(
+                            onPressed: (() {
+                              userViewModel.deleteUsers(
+                                id: userViewModel.userLogin['id'],
+                                context: context,
+                              );
+                              // categoryViewModel.deleteCategories(
+                              //   id: category.id,
+                              // );
+                              // categoryViewModel.getCategories();
+                              // Navigator.pop(context);
+                              // Navigator.popUntil(context, (route) => route.isFirst);
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: ((context) => const CategoryScreen()),
+                              //   ),
+                              // );
+                            }),
+                            child: const Text('Yes'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
       ),
       body: Consumer<UserViewModel>(
         builder: (context, value, _) => ListView(
@@ -42,67 +130,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: const Icon(Icons.person, size: 60),
             ),
             const SizedBox(height: 15),
-            ListTile(
-              leading: CircleAvatar(
-                backgroundColor: AllColor.primaryColor,
-                radius: kRadialReactionRadius,
-                child: const Icon(Icons.person),
-              ),
-              title: Text(userViewModel.userLogin['fullname']),
-              // Text(userViewModel.userLogin['fullname']),
+            TileInfo(
+              text: userViewModel.userLogin['fullname'],
+              icon: Icon(Icons.person),
+              bgTile: AllColor.primaryColor,
             ),
             const SizedBox(height: 15),
-            ListTile(
-              leading: CircleAvatar(
-                backgroundColor: AllColor.primaryColor,
-                radius: kRadialReactionRadius,
-                child: const Icon(Icons.mail),
-              ),
-              title: Text(userViewModel.userLogin['email']),
-              // title: Text(userViewModel.userLogin['email']),
+            TileInfo(
+              text: userViewModel.userLogin['email'],
+              icon: Icon(Icons.mail),
+              bgTile: AllColor.primaryColor,
             ),
             const SizedBox(height: 15),
-            ListTile(
-              leading: CircleAvatar(
-                backgroundColor: AllColor.primaryColor,
-                radius: kRadialReactionRadius,
-                child: const Icon(Icons.phone),
-              ),
-              title: Text(userViewModel.userLogin['phone']),
-              // title: Text(userViewModel.userLogin['phone']),
+            TileInfo(
+              text: userViewModel.userLogin['phone'],
+              icon: Icon(Icons.phone),
+              bgTile: AllColor.primaryColor,
             ),
             const SizedBox(height: 15),
-            ListTile(
-              title: const Text('Logout'),
-              // tileColor: AllColor.bgErrorColor,
-              leading: CircleAvatar(
-                backgroundColor: AllColor.errorColor,
-                radius: kRadialReactionRadius,
-                child: Icon(
-                  Icons.logout,
-                  color: AllColor.bgErrorColor,
-                ),
-              ),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    content: const Text('Are you sure?'),
-                    actions: [
-                      TextButton(
-                        child: const Text('No'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      TextButton(
-                        child: const Text('Yes'),
-                        onPressed: () => userViewModel.logout(context),
-                      ),
-                    ],
-                  ),
-                );
-              },
+            TileInfo(
+              text: AllText.logout,
+              icon: Icon(Icons.logout),
+              bgTile: AllColor.errorColor,
+              onTap: (() => dialogLogout()),
             ),
           ],
         ),

@@ -28,6 +28,17 @@ class UserApi {
     }
   }
 
+  Future getUserById({required id}) async {
+    try {
+      final Response response = await dio.get('http://192.168.0.10/app/users/$id');
+      final user = response.data;
+      // print(user);
+      return user;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   Future postUser({
     required String fullname,
     required String username,

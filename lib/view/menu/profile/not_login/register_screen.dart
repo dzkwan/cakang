@@ -1,10 +1,10 @@
 import 'package:cakang/utils/pallete.dart';
 import 'package:cakang/view/menu/profile/not_login/widget/button_login.dart';
+import 'package:cakang/view/menu/profile/not_login/widget/text_button.dart';
 import 'package:cakang/view_model/category_view_model.dart';
 import 'package:cakang/view_model/city_view_model.dart';
 import 'package:cakang/view_model/user_view_model.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,9 +24,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
   final phoneCtrl = TextEditingController();
-  // late int radioValue;
-  // final categoryCtrl = TextEditingController();
-  // final cityCtrl = TextEditingController();
 
   @override
   void initState() {
@@ -34,6 +31,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
         .categoriesCheckboxValue();
     Provider.of<CityViewModel>(context, listen: false).getcities();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    fullnameCtrl.dispose();
+    usernameCtrl.dispose();
+    emailCtrl.dispose();
+    passwordCtrl.dispose();
+    phoneCtrl.dispose();
+    super.dispose();
   }
 
   @override
@@ -113,33 +120,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(height: 20),
             TextFormField(
               controller: phoneCtrl,
+              keyboardType: TextInputType.phone,
               validator: (value) => value!.isEmpty ? AllText.validator : null,
               decoration: InputDecoration(
                 label: Text(AllText.phone),
               ),
             ),
             const SizedBox(height: 20),
-            // TextFormField(
-            //   controller: phoneCtrl,
-            //   validator: (value) => value!.isEmpty ? AllText.validator : null,
-            //   decoration: InputDecoration(
-            //     label: Text(AllText.phone),
-            //   ),
-            // ),
-            // Consumer<CategoryViewModel>(
-            //   builder: (context, value, _) {
-            //     return SizedBox(
-            //       child: Text('${categoryViewModel.idCategory}'),
-            //     );
-            //   },
-            // ),
-            // Consumer<CityViewModel>(
-            //   builder: (context, value, _) {
-            //     return SizedBox(
-            //       child: Text('${cityViewModel.radioValue}'),
-            //     );
-            //   },
-            // ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -150,7 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         Consumer<CategoryViewModel>(
                           builder: (context, value, _) => ListView.builder(
-                            // clipBehavior: Clip.antiAlias,
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
                             itemCount: categoryViewModel.categories.length,
@@ -191,6 +178,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Consumer<CityViewModel>(
                           builder: (context, value, _) => ListView.builder(
                             shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
                             padding: EdgeInsets.zero,
                             itemCount: cityViewModel.cities.length,
                             itemBuilder: (context, index) {
@@ -216,69 +204,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ],
             ),
-            // Card(
-            //   child: ExpansionTile(
-            //     title: Text(AllText.category),
-            //     children: [
-            //       Consumer<CategoryViewModel>(
-            //         builder: (context, value, _) => ListView.builder(
-            //           // clipBehavior: Clip.antiAlias,
-            //           shrinkWrap: true,
-            //           padding: EdgeInsets.zero,
-            //           itemCount: categoryViewModel.categories.length,
-            //           itemBuilder: (context, index) {
-            //             final category = categoryViewModel.categories[index];
-            //             return CheckboxListTile(
-            //               title: Text('${category.name}'),
-            //               value: categoryViewModel.allCategory['value$index'],
-            //               // value: false,
-            //               onChanged: (value) {
-            //                 categoryViewModel.choseCategory(
-            //                   index: index,
-            //                   value: value,
-            //                   id: category.id,
-            //                 );
-            //               },
-            //             );
-            //           },
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // SizedBox(height: 20),
-            // Consumer<CityViewModel>(
-            //   builder: (context, value, _) {
-            //     return SizedBox(
-            //       child: Text('${cityViewModel.radioValue}'),
-            //     );
-            //   },
-            // ),
-            // Card(
-            //   child: ExpansionTile(
-            //     title: Text(AllText.city),
-            //     children: [
-            //       Consumer<CityViewModel>(
-            //         builder: (context, value, _) => ListView.builder(
-            //           shrinkWrap: true,
-            //           padding: EdgeInsets.zero,
-            //           itemCount: cityViewModel.cities.length,
-            //           itemBuilder: (context, index) {
-            //             final city = cityViewModel.cities[index];
-            //             return RadioListTile(
-            //               value: city.id,
-            //               title: Text(city.name),
-            //               groupValue: cityViewModel.radioValue,
-            //               onChanged: (value) {
-            //                 cityViewModel.choseCity(value: value);
-            //               },
-            //             );
-            //           },
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             const SizedBox(height: 25),
             ButtonLogin(
               text: AllText.register,
@@ -306,39 +231,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 }
               }),
             ),
-            // ElevatedButton(
-            //   child: Text(AllText.register),
-            //   onPressed: (() {
-            //     if (formKey.currentState!.validate()) {}
-            //   }),
-            // ),
             const SizedBox(height: 30),
-            Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'sudah punya akun? ',
-                    style: Theme.of(context).textTheme.overline,
-                  ),
-                  GestureDetector(
-                    onTap: (() {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        CupertinoPageRoute(builder: (context) => const LoginScreen()),
-                        ((route) => false),
-                      );
-                    }),
-                    child: Text(
-                      'Masuk',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(color: AllColor.buttonColor),
-                    ),
-                  ),
-                ],
-              ),
+            TextBtnAccount(
+              text: 'Sudah punya akun? ',
+              textButton: 'Masuk',
+              moveScreen: const LoginScreen(),
             ),
             const SizedBox(height: 80),
           ],

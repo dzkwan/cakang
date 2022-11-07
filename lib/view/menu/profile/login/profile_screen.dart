@@ -91,18 +91,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 id: userViewModel.userLogin['id'],
                                 context: context,
                               );
-                              // categoryViewModel.deleteCategories(
-                              //   id: category.id,
-                              // );
-                              // categoryViewModel.getCategories();
-                              // Navigator.pop(context);
-                              // Navigator.popUntil(context, (route) => route.isFirst);
-                              // Navigator.pushReplacement(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: ((context) => const CategoryScreen()),
-                              //   ),
-                              // );
                             }),
                             child: const Text('Yes'),
                           ),

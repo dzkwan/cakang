@@ -49,7 +49,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       context,
       listen: false,
     );
-    // final user = userViewModel.users[widget.id];
 
     return Scaffold(
       appBar: AppBar(
@@ -131,7 +130,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           children: [
                             Consumer<CategoryViewModel>(
                               builder: (context, value, _) => ListView.builder(
-                                // clipBehavior: Clip.antiAlias,
                                 shrinkWrap: true,
                                 padding: EdgeInsets.zero,
                                 itemCount: categoryViewModel.categories.length,
@@ -149,7 +147,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     contentPadding: EdgeInsets.zero,
                                     value: categoryViewModel
                                         .allCategory['value$index'],
-                                    // value: false,
                                     onChanged: (value) {
                                       categoryViewModel.choseCategory(
                                         index: index,
@@ -221,7 +218,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           phone: phoneCtrl.text,
                           city: cityViewModel.radioValue,
                           category: categoryViewModel.idCategory.toString(),
-                          // context: context,
                         );
                       }
                     }

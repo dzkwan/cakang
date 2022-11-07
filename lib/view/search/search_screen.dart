@@ -4,10 +4,11 @@ import 'package:cakang/view_model/user_view_model.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:url_launcher/url_launcher.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key,});
+  const SearchScreen({
+    super.key,
+  });
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -93,7 +94,6 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               itemCount: userViewModel.filterUser.length,
               itemBuilder: (context, index) {
-                // print('${userViewModel.filterUser}');
                 final user = userViewModel.filterUser[index];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 15),
@@ -120,7 +120,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     height: 40,
                     child: Consumer<CityViewModel>(
                       builder: (context, value, _) {
-                        // print('${userViewModel.filterUsers("Jakarta")}');
                         return DropdownSearch(
                           items: cityViewModel.cityName,
                           onChanged: (value) {
@@ -129,12 +128,10 @@ class _SearchScreenState extends State<SearchScreen> {
                           },
                           dropdownDecoratorProps: DropDownDecoratorProps(
                             dropdownSearchDecoration: InputDecoration(
-                              // label: Text(AllText.city),
                               hintText: 'pilih kota',
                             ),
                           ),
                           dropdownButtonProps: DropdownButtonProps(
-                            // splashRadius: 0,
                             color: AllColor.white,
                           ),
                         );

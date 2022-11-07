@@ -7,7 +7,6 @@ import 'package:cakang/view_model/user_view_model.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -75,7 +74,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: [
             Text(
               AllText.register,
-              // overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
@@ -154,7 +152,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 contentPadding: EdgeInsets.zero,
                                 value: categoryViewModel
                                     .allCategory['value$index'],
-                                // value: false,
                                 onChanged: (value) {
                                   categoryViewModel.choseCategory(
                                     index: index,

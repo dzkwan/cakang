@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cakang/service/user_api.dart';
 import 'package:cakang/view/menu/main_screen.dart';
 import 'package:cakang/view/menu/profile/login/profile_screen.dart';
@@ -14,16 +13,6 @@ class UserViewModel extends ChangeNotifier {
   List filterUser = [];
   Map userLogin = {};
   String? selectedItem;
-
-  // late int id;
-  // String fullname = '';
-  // String username = '';
-  // String email = '';
-  // String password = '';
-  // String phone = '';
-  // String city = '';
-  // List category = [];
-  // List get users => _users;
 
   openWhatsapp({required phone}) async {
     final _phone = phone.substring(1);
@@ -41,7 +30,6 @@ class UserViewModel extends ChangeNotifier {
   }
 
   getUsersById(id) async {
-    // userLogin.clear();
     userLogin = await UserApi().getUserById(id: id);
     notifyListeners();
   }
@@ -96,7 +84,6 @@ class UserViewModel extends ChangeNotifier {
     required city,
     required category,
   }) async {
-    // userLogin.clear();
     userLogin = await UserApi().putUser(
       id: id,
       fullname: fullname,
@@ -135,7 +122,6 @@ class UserViewModel extends ChangeNotifier {
   filterUsers(value) {
     filterUser = users.where((element) => element.city == value).toList();
     selectedItem = value;
-    // print(value);
     notifyListeners();
   }
 
@@ -167,12 +153,6 @@ class UserViewModel extends ChangeNotifier {
         MaterialPageRoute(builder: ((context) => const ProfileScreen())),
         (route) => false,
       );
-      // showDialog(
-      //   context: context,
-      //   builder: (context) => AlertDialog(
-      //     content: Text('$userLogin'),
-      //   ),
-      // );
     }
     notifyListeners();
   }
@@ -194,7 +174,6 @@ class UserViewModel extends ChangeNotifier {
 
   fetchUsers() async {
     loginData = await SharedPreferences.getInstance();
-    // final fullname = {'fullname': loginData.getStringl('fullname')};
     final _category = jsonDecode(loginData.getString('category').toString());
     Map<String, dynamic> fetch = {
       'id': loginData.getInt('id'),
@@ -207,14 +186,6 @@ class UserViewModel extends ChangeNotifier {
       'categroy': _category,
     };
     userLogin.addAll(fetch);
-    // id = loginData.getInt('id')!;
-    // fullname = loginData.getString('fullname').toString();
-    // username = loginData.getString('username').toString();
-    // email = loginData.getString('email').toString();
-    // password = loginData.getString('password').toString();
-    // phone = loginData.getString('phone').toString();
-    // city = loginData.getString('city').toString();
-    // category = loginData.getStringList('category')!.toList();
     notifyListeners();
   }
 

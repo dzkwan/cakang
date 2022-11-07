@@ -20,8 +20,8 @@ class ButtonLogin extends StatelessWidget {
           ),
         ),
       ),
-      child: Text(text),
       onPressed: onPressed,
+      child: Text(text),
     );
   }
 }

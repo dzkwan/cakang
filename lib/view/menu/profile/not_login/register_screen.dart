@@ -32,7 +32,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     Provider.of<CategoryViewModel>(context, listen: false)
         .categoriesCheckboxValue();
-    Provider.of<CityViewModel>(context, listen: false).citiesRadioValue();
+    Provider.of<CityViewModel>(context, listen: false).getcities();
     super.initState();
   }
 
@@ -60,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: ListView(
           shrinkWrap: true,
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 10,
             right: 15,
             left: 15,
@@ -74,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   .bodyText1!
                   .copyWith(fontWeight: FontWeight.w600),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: fullnameCtrl,
               validator: (value) => value!.isEmpty ? AllText.validator : null,
@@ -82,7 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 label: Text(AllText.fullname),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: usernameCtrl,
               validator: (value) => value!.isEmpty ? AllText.validator : null,
@@ -90,7 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 label: Text(AllText.username),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: emailCtrl,
               validator: (value) =>
@@ -101,7 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 label: Text(AllText.email),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: passwordCtrl,
               obscureText: true,
@@ -110,7 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 label: Text(AllText.password),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: phoneCtrl,
               validator: (value) => value!.isEmpty ? AllText.validator : null,
@@ -118,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 label: Text(AllText.phone),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // TextFormField(
             //   controller: phoneCtrl,
             //   validator: (value) => value!.isEmpty ? AllText.validator : null,
@@ -279,7 +279,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             //     ],
             //   ),
             // ),
-            SizedBox(height: 25),
+            const SizedBox(height: 25),
             ButtonLogin(
               text: AllText.register,
               onPressed: (() {
@@ -287,7 +287,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   if (categoryViewModel.idCategory.isEmpty &&
                       cityViewModel.radioValue == null) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('category dan city required!'),
                       ),
                     );
@@ -312,7 +312,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             //     if (formKey.currentState!.validate()) {}
             //   }),
             // ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -325,7 +325,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onTap: (() {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        CupertinoPageRoute(builder: (context) => LoginScreen()),
+                        CupertinoPageRoute(builder: (context) => const LoginScreen()),
                         ((route) => false),
                       );
                     }),
@@ -340,7 +340,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 80),
+            const SizedBox(height: 80),
           ],
         ),
       ),

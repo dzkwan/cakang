@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 class AllColor {
-  // static Color darkGreen = const Color.fromRGBO(11, 140, 125, 1);
-  static Color primaryColor = Color.fromARGB(255, 86, 135, 209);
+  static Color Green = Color(0xff25D366);
+  static Color primaryColor = const Color.fromARGB(255, 86, 135, 209);
   static Color buttonColor = const Color(0xff769FCD);
   static Color errorColor = Colors.red;
   static Color bgErrorColor = Colors.red.shade100;
@@ -11,7 +11,7 @@ class AllColor {
   static Color dark = Colors.black87;
   // static Color darkGrey = const Color.fromRGBO(106, 112, 124, 1);
   static Color darkGrey = Colors.grey.shade600;
-  static Color gray = Colors.grey;
+  // static Color gray = Colors.grey;
   static Color white = Colors.white;
   static Color border = const Color(0xffD6E6F2);
   static Color outlineBorder = const Color(0xFFB9D7EA);

@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Consumer<UserViewModel>(
         builder: (context, value, _) => ListView(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 10,
             right: 15,
             left: 15,
@@ -38,65 +38,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             CircleAvatar(
               backgroundColor: AllColor.primaryColor,
-              child: Icon(Icons.person, size: 60),
               radius: kToolbarHeight,
+              child: const Icon(Icons.person, size: 60),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             ListTile(
               leading: CircleAvatar(
                 backgroundColor: AllColor.primaryColor,
-                child: Icon(Icons.person),
                 radius: kRadialReactionRadius,
+                child: const Icon(Icons.person),
               ),
               title: Text(userViewModel.userLogin['fullname']),
               // Text(userViewModel.userLogin['fullname']),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             ListTile(
               leading: CircleAvatar(
                 backgroundColor: AllColor.primaryColor,
-                child: Icon(Icons.mail),
                 radius: kRadialReactionRadius,
+                child: const Icon(Icons.mail),
               ),
               title: Text(userViewModel.userLogin['email']),
               // title: Text(userViewModel.userLogin['email']),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             ListTile(
               leading: CircleAvatar(
                 backgroundColor: AllColor.primaryColor,
-                child: Icon(Icons.phone),
                 radius: kRadialReactionRadius,
+                child: const Icon(Icons.phone),
               ),
               title: Text(userViewModel.userLogin['phone']),
               // title: Text(userViewModel.userLogin['phone']),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             ListTile(
-              title: Text('Logout'),
-              tileColor: AllColor.bgErrorColor,
+              title: const Text('Logout'),
+              // tileColor: AllColor.bgErrorColor,
               leading: CircleAvatar(
                 backgroundColor: AllColor.errorColor,
+                radius: kRadialReactionRadius,
                 child: Icon(
                   Icons.logout,
                   color: AllColor.bgErrorColor,
                 ),
-                radius: kRadialReactionRadius,
               ),
               onTap: () {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    content: Text('Are you sure?'),
+                    content: const Text('Are you sure?'),
                     actions: [
                       TextButton(
-                        child: Text('No'),
+                        child: const Text('No'),
                         onPressed: () {
                           Navigator.pop(context);
                         },
                       ),
                       TextButton(
-                        child: Text('Yes'),
+                        child: const Text('Yes'),
                         onPressed: () => userViewModel.logout(context),
                       ),
                     ],

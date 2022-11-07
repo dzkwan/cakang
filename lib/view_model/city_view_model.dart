@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class CityViewModel extends ChangeNotifier {
   List cities = [];
+  List cityName = [];
   int? radioValue;
   // List idCategory = [];
   // Map allCategory = {};
@@ -21,7 +22,7 @@ class CityViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  citiesRadioValue() async {
+  getcities() async {
     cities = await CityApi().getCity();
     // for (var i = 0; i < cities.length; i++) {
     //   allCategory['value$i'] = false;
@@ -29,6 +30,16 @@ class CityViewModel extends ChangeNotifier {
     // if (idCategory.isNotEmpty) {
     //   idCategory.clear();
     // }
+    notifyListeners();
+  }
+
+  searchCity() async {
+    final List data = await CityApi().getCity();
+    data.forEach((element) {
+      // print(element['name']);
+      cityName.add(element.name);
+    });
+    // print(cityName.toString());
     notifyListeners();
   }
 }

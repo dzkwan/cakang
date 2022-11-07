@@ -15,12 +15,12 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        items: [
-          const BottomNavigationBarItem(
+        items: const [
+          BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: 'Profile',
           ),
@@ -36,7 +36,7 @@ class _MainScreenState extends State<MainScreen> {
                     child: HomeScreen(),
                   ),
                 ] else if (index == 1) ...[
-                  Expanded(
+                  const Expanded(
                     child: LoginScreen(),
                   ),
                 ]

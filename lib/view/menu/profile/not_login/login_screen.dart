@@ -1,9 +1,6 @@
 import 'package:cakang/utils/pallete.dart';
-import 'package:cakang/view/menu/profile/login/profile_screen.dart';
 import 'package:cakang/view/menu/profile/not_login/register_screen.dart';
 import 'package:cakang/view/menu/profile/not_login/widget/button_login.dart';
-import 'package:cakang/view_model/category_view_model.dart';
-import 'package:cakang/view_model/city_view_model.dart';
 import 'package:cakang/view_model/user_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         key: formKey,
         child: ListView(
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 10,
             right: 15,
             left: 15,
@@ -71,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   .bodyText1!
                   .copyWith(fontWeight: FontWeight.w600),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: usernameCtrl,
               validator: (value) => value!.isEmpty ? AllText.validator : null,
@@ -79,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 label: Text(AllText.username),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: passwordCtrl,
               validator: (value) => value!.isEmpty ? AllText.validator : null,
@@ -87,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 label: Text(AllText.password),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             ButtonLogin(
               text: AllText.login,
               onPressed: (() {
@@ -135,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
             //     if (formKey.currentState!.validate()) {}
             //   }),
             // ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -149,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => RegisterScreen()),
+                            builder: (context) => const RegisterScreen()),
                         ((route) => false),
                       );
                     }),

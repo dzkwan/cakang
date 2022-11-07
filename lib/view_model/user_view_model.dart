@@ -1,15 +1,18 @@
 import 'package:cakang/service/user_api.dart';
 import 'package:cakang/view/menu/main_screen.dart';
 import 'package:cakang/view/menu/profile/login/profile_screen.dart';
-import 'package:cakang/view/menu/profile/not_login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserViewModel extends ChangeNotifier {
   late SharedPreferences loginData;
   late bool newUser;
   List users = [];
+  List filterUser = [];
   Map userLogin = {};
+  String? selectedItem;
+
   late int id;
   String fullname = '';
   String username = '';
@@ -20,11 +23,32 @@ class UserViewModel extends ChangeNotifier {
   List category = [];
   // List get users => _users;
 
+  openWhatsapp({required phone, required context}) async {
+    final _phone = phone.substring(1);
+    final url = Uri.parse('https://api.whatsapp.com/send?phone=62$_phone');
+    await launchUrl(url, mode: LaunchMode.externalApplication);
+    //   throw "cannot launch";
+    // }
+    // await canLaunchUrl(url)
+    //     ? await launchUrl(url)
+    //     : ScaffoldMessenger.of(context).showSnackBar(
+    //         SnackBar(content: new Text("whatsapp no installed")),
+    //       );
+  }
+
   getUsers() async {
-    users = await UserApi().getUser();
+    users = filterUser = await UserApi().getUser();
     // _users = data;
     notifyListeners();
   }
+
+  // getChipCategories(index)  {
+  //   final List _category = filterUser[index]['category'];
+  //   for (var i = 0; i < _category.length; i++) {
+  //     // return Chip(label: Text('${_category[i]}'));
+  //   }
+  //   notifyListeners();
+  // }
 
   regisUsers({
     required fullname,
@@ -60,7 +84,7 @@ class UserViewModel extends ChangeNotifier {
     );
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: ((context) => ProfileScreen())),
+      MaterialPageRoute(builder: ((context) => const ProfileScreen())),
       (route) => false,
     );
     // users = await UserApi().getUser();
@@ -100,6 +124,12 @@ class UserViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  filterUsers(value) {
+    filterUser = users.where((element) => element.city == value).toList();
+    selectedItem = value;
+    notifyListeners();
+  }
+
   loginUsers({required username, required password, required context}) async {
     FocusManager.instance.primaryFocus?.unfocus();
     userLogin = await UserApi().checkLogin(
@@ -109,7 +139,7 @@ class UserViewModel extends ChangeNotifier {
 
     if (userLogin.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('username atau password salah!'),
         ),
       );
@@ -126,7 +156,7 @@ class UserViewModel extends ChangeNotifier {
           'category', List<String>.from(userLogin['category']));
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: ((context) => ProfileScreen())),
+        MaterialPageRoute(builder: ((context) => const ProfileScreen())),
         (route) => false,
       );
       // showDialog(
@@ -146,7 +176,7 @@ class UserViewModel extends ChangeNotifier {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: ((context) => ProfileScreen()),
+          builder: ((context) => const ProfileScreen()),
         ),
         (route) => false,
       );
@@ -180,6 +210,7 @@ class UserViewModel extends ChangeNotifier {
 
   logout(context) {
     loginData.setBool('isLogin', false);
+    loginData.remove('id');
     loginData.remove('fullname');
     loginData.remove('username');
     loginData.remove('email');
@@ -190,7 +221,7 @@ class UserViewModel extends ChangeNotifier {
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
-        builder: ((context) => MainScreen()),
+        builder: ((context) => const MainScreen()),
       ),
       (route) => false,
     );

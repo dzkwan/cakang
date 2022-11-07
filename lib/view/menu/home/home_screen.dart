@@ -1,7 +1,5 @@
 import 'package:cakang/view/search/search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,11 +17,11 @@ class _HomeScreenState extends State<HomeScreen> {
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
             // toolbarHeight: 45,
-            title: Text('Cakang'),
+            title: const Text('Cakang'),
             pinned: true,
             floating: true,
             bottom: PreferredSize(
-              preferredSize: Size(double.infinity, 60),
+              preferredSize: const Size(double.infinity, 60),
               child: Padding(
                 padding: const EdgeInsets.only(
                   right: 10,
@@ -36,11 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SearchScreen()),
+                        MaterialPageRoute(builder: (context) => const SearchScreen()),
                       );
                     },
                     readOnly: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Search',
                     ),
                     // style: Theme.of(context).textTheme.headline5,

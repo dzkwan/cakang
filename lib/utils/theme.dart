@@ -66,12 +66,12 @@ ThemeData myTheme = ThemeData(
       fontSize: 16,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.5,
-      color: AllColor.gray,
+      color: AllColor.darkGrey,
     ),
     // Theme.of(context).textTheme.headline6!.copyWith(color: MyColor.gray),
     filled: true,
     fillColor: AllColor.border,
-    contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+    contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
     // labelStyle: TextStyle(color: MyColor.primaryColor),
     // suffixIcon: suffixIcon,
     border: OutlineInputBorder(
@@ -105,7 +105,7 @@ ThemeData myTheme = ThemeData(
         borderRadius: BorderRadius.circular(8),
       ),
       backgroundColor: AllColor.buttonColor,
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
         letterSpacing: 1.25,
@@ -116,7 +116,7 @@ ThemeData myTheme = ThemeData(
     collapsedTextColor: AllColor.dark,
     textColor: AllColor.dark,
     backgroundColor: AllColor.border,
-    tilePadding: EdgeInsets.symmetric(horizontal: 8),
+    tilePadding: const EdgeInsets.symmetric(horizontal: 8),
   ),
   cardTheme: CardTheme(
     elevation: 0,
@@ -132,18 +132,21 @@ ThemeData myTheme = ThemeData(
   checkboxTheme: CheckboxThemeData(
     fillColor: MaterialStatePropertyAll(AllColor.buttonColor),
   ),
-  listTileTheme: ListTileThemeData(
-    tileColor: AllColor.border,
-    contentPadding: EdgeInsets.symmetric(
-      vertical: 5,
-      horizontal: 15,
-    ),
-    shape: RoundedRectangleBorder(
-      //<-- SEE HERE
-      // side: BorderSide(width: 2),
-      borderRadius: BorderRadius.circular(kToolbarHeight),
-    ),
+  chipTheme: ChipThemeData(
+    backgroundColor: AllColor.border,
   ),
+  // listTileTheme: ListTileThemeData(
+  //   tileColor: AllColor.border,
+  //   contentPadding: const EdgeInsets.symmetric(
+  //     vertical: 5,
+  //     horizontal: 15,
+  //   ),
+  //   shape: RoundedRectangleBorder(
+  //     //<-- SEE HERE
+  //     // side: BorderSide(width: 2),
+  //     borderRadius: BorderRadius.circular(kToolbarHeight),
+  //   ),
+  // ),
   radioTheme: RadioThemeData(
     fillColor: MaterialStatePropertyAll(AllColor.buttonColor),
     // visualDensity: VisualDensity(horizontal: -4,vertical: -4,),

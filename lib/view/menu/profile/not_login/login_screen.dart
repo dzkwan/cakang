@@ -70,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 20),
             TextFormField(
               controller: passwordCtrl,
+              obscureText: true,
               validator: (value) => value!.isEmpty ? AllText.validator : null,
               decoration: InputDecoration(
                 label: Text(AllText.password),

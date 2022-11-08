@@ -6,7 +6,7 @@ class CategoryViewModel extends ChangeNotifier {
   List idCategory = [];
   Map allCategory = {};
 
-  choseCategory({required index, required value, required id})  {
+  void choseCategory({required index, required value, required id})  {
     allCategory['value$index'] = value;
     if (allCategory['value$index']) {
       idCategory.add(id);
@@ -17,7 +17,7 @@ class CategoryViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  categoriesCheckboxValue() async {
+  Future categoriesCheckboxValue() async {
     categories = await CategoryApi().getCategory();
     for (var i = 0; i < categories.length; i++) {
       allCategory['value$i'] = false;

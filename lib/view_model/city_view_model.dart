@@ -6,17 +6,17 @@ class CityViewModel extends ChangeNotifier {
   List cityName = [];
   int? radioValue;
 
-  choseCity({required value})  {
+  void choseCity({required value})  {
     radioValue = value;
     notifyListeners();
   }
 
-  getcities() async {
+  Future getcities() async {
     cities = await CityApi().getCity();
     notifyListeners();
   }
 
-  searchCity() async {
+  Future searchCity() async {
     final List data = await CityApi().getCity();
     data.forEach((element) {
       cityName.add(element.name);

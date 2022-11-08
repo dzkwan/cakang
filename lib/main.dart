@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: ((context) => CityViewModel())),
       ],
       child: MaterialApp(
-        // title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: myTheme,
         home: const MainScreen(),

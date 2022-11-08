@@ -14,14 +14,14 @@ class UserViewModel extends ChangeNotifier {
   Map userLogin = {};
   String? selectedItem;
 
-  openWhatsapp({required phone}) async {
+  Future openWhatsapp({required phone}) async {
     final _phone = phone.substring(1);
     final url = Uri.parse('https://api.whatsapp.com/send?phone=62$_phone');
     await launchUrl(url, mode: LaunchMode.externalApplication);
     notifyListeners();
   }
 
-  getUsers() async {
+  Future getUsers() async {
     if (selectedItem != null) {
       selectedItem = null;
     }
@@ -29,12 +29,12 @@ class UserViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  getUsersById(id) async {
+  Future getUsersById(id) async {
     userLogin = await UserApi().getUserById(id: id);
     notifyListeners();
   }
 
-  regisUsers({
+  Future regisUsers({
     required fullname,
     required username,
     required email,
@@ -74,7 +74,7 @@ class UserViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  editUsers({
+  Future editUsers({
     required id,
     required fullname,
     required username,
@@ -97,7 +97,7 @@ class UserViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteUsers({required id, required context}) async {
+  Future deleteUsers({required id, required context}) async {
     await UserApi().deleteUser(id: id);
     userLogin.clear();
     loginData.setBool('isLogin', false);
@@ -119,13 +119,13 @@ class UserViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  filterUsers(value) {
+  void filterUsers(value) {
     filterUser = users.where((element) => element.city == value).toList();
     selectedItem = value;
     notifyListeners();
   }
 
-  loginUsers({required username, required password, required context}) async {
+  Future loginUsers({required username, required password, required context}) async {
     FocusManager.instance.primaryFocus?.unfocus();
     userLogin = await UserApi().checkLogin(
       username: username,
@@ -147,7 +147,7 @@ class UserViewModel extends ChangeNotifier {
       loginData.setString('password', userLogin['password']);
       loginData.setString('phone', userLogin['phone']);
       loginData.setString('city', userLogin['city']);
-      loginData.setString('category', userLogin['category'].toString());
+      loginData.setStringList('category', List<String>.from(userLogin['category']));
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: ((context) => const ProfileScreen())),
@@ -157,7 +157,7 @@ class UserViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  checkLogin(context) async {
+  Future checkLogin(context) async {
     loginData = await SharedPreferences.getInstance();
     newUser = loginData.getBool('isLogin') ?? false;
     if (newUser == true) {
@@ -172,9 +172,9 @@ class UserViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetchUsers() async {
+  Future fetchUsers() async {
     loginData = await SharedPreferences.getInstance();
-    final _category = jsonDecode(loginData.getString('category').toString());
+    // final _category = jsonDecode(loginData.getString('category').toString());
     Map<String, dynamic> fetch = {
       'id': loginData.getInt('id'),
       'fullname': loginData.getString('fullname').toString(),
@@ -183,13 +183,13 @@ class UserViewModel extends ChangeNotifier {
       'password': loginData.getString('password').toString(),
       'phone': loginData.getString('phone').toString(),
       'city': loginData.getString('city').toString(),
-      'categroy': _category,
+      'categroy': loginData.getStringList('category'),
     };
     userLogin.addAll(fetch);
     notifyListeners();
   }
 
-  logout(context) {
+  void logout(context) {
     loginData.setBool('isLogin', false);
     loginData.remove('id');
     loginData.remove('fullname');

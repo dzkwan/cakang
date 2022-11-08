@@ -13,7 +13,7 @@ void main() {
     });
     test('login user', () async {
       var checkLogin =
-          await UserApi().checkLogin(username: 'arhan', password: 'pratama');
+          await UserApi().checkLogin(username: 'irfan', password: 'haris');
       expect(checkLogin.isNotEmpty, true);
     });
     test('regis user', () async {
@@ -39,7 +39,7 @@ void main() {
         city: 7,
         category: '[1,2]',
       );
-      expect(editUser.isNotEmpty, false);
+      expect(editUser.isNotEmpty, true);
     });
     test('delete user', () async {
       var deleteUser = await UserApi().deleteUser(id: 66);

@@ -21,7 +21,6 @@ class UserApi {
             ),
           )
           .toList();
-      // print(user);
       return user;
     } catch (e) {
       throw Exception(e.toString());
@@ -32,7 +31,6 @@ class UserApi {
     try {
       final Response response = await dio.get('http://192.168.0.10/app/users/$id');
       final user = response.data;
-      // print(user);
       return user;
     } catch (e) {
       throw Exception(e.toString());
@@ -62,7 +60,6 @@ class UserApi {
         }),
       );
       final user = response.data;
-      // print(user);
       return user;
     } catch (e) {
       throw Exception(e.toString());
@@ -80,7 +77,7 @@ class UserApi {
     required String category,
   }) async {
     try {
-      await dio.put(
+      final Response response = await dio.put(
         'http://192.168.0.10/app/users/$id',
         data: {
           'id': id,
@@ -94,6 +91,8 @@ class UserApi {
         },
         options: Options(contentType: Headers.formUrlEncodedContentType),
       );
+      final user = response.data;
+      return user;
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -127,7 +126,6 @@ class UserApi {
         }),
       );
       final user = response.data;
-      // print(user);
       return user;
     } catch (e) {
       throw Exception(e.toString());
